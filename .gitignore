@@ -1,0 +1,22 @@
+# Operating system and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Secret or environment files (none needed for this demo)
+.env
+.env.*
+!.env.example
+
+# Tool outputs
+node_modules/
+coverage/
+test-results/
+playwright-report/
+__pycache__/
