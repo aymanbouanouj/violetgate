@@ -6,13 +6,25 @@ const login = document.getElementById('login');
 const signUpSection = document.getElementById('signUpSection');
 const signInSection = document.getElementById('signInSection');
 const themeToggle = document.getElementById('themeToggle');
+const toggleLeft = document.getElementById('toggleLeft');
+const toggleRight = document.getElementById('toggleRight');
+
+function setAccessible(section, enabled) {
+  section.inert = !enabled;
+  section.setAttribute('aria-hidden', String(!enabled));
+}
 
 function showForm(signUp) {
+  // Update both sliding forms AND the panels on the other side.
   container.classList.toggle('active', signUp);
-  signUpSection.inert = !signUp;
-  signUpSection.setAttribute('aria-hidden', String(!signUp));
-  signInSection.inert = signUp;
-  signInSection.setAttribute('aria-hidden', String(signUp));
+  setAccessible(signUpSection, signUp);
+  setAccessible(signInSection, !signUp);
+  setAccessible(toggleLeft, signUp);
+  setAccessible(toggleRight, !signUp);
+
+  // The clicked button becomes hidden. Move focus to the newly shown form.
+  const heading = document.getElementById(signUp ? 'signup-title' : 'signin-title');
+  heading.focus({ preventScroll: true });
 }
 
 register.addEventListener('click', () => showForm(true));
@@ -20,7 +32,7 @@ login.addEventListener('click', () => showForm(false));
 
 // Follow the system setting initially, but respect a previously saved choice.
 let savedTheme = null;
-try { savedTheme = localStorage.getItem('violetgate-theme') ?? localStorage.getItem('ayman-theme'); } catch (_) { /* Storage may be unavailable. */ }
+try { savedTheme = localStorage.getItem('violetgate-theme'); } catch (_) { /* Storage may be unavailable. */ }
 const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 const initialTheme = savedTheme === 'dark' || savedTheme === 'light'
   ? savedTheme
@@ -42,36 +54,29 @@ themeToggle.addEventListener('click', () => {
   try { localStorage.setItem('violetgate-theme', theme); } catch (_) { /* Still works for this visit. */ }
 });
 
-// This project provides a UI only; don't submit credentials to a nonexistent backend.
+// The page is a frontend demo. Buttons are deliberately not of type=submit,
+// and password inputs have no name attribute: even with JavaScript disabled,
+// a demo form cannot submit credentials through the URL.
 for (const [formId, statusId] of [
   ['signUpForm', 'signup-status'],
   ['signInForm', 'signin-status'],
 ]) {
   const form = document.getElementById(formId);
   const status = document.getElementById(statusId);
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    status.textContent = 'Demo interface only — authentication is not connected yet.';
-  });
+  const showDemoMessage = (event) => {
+    event?.preventDefault();
+    if (!form.reportValidity()) return;
+    status.textContent = 'Frontend demo only — no account is created or signed in.';
+  };
+  form.addEventListener('submit', showDemoMessage);
+  form.querySelector('[data-demo-submit]').addEventListener('click', showDemoMessage);
   form.querySelectorAll('[data-social]').forEach((button) => {
     button.addEventListener('click', () => {
-      status.textContent = `${button.dataset.social} sign-in is not connected yet.`;
+      status.textContent = `${button.dataset.social} authentication is not available in this UI demo.`;
     });
   });
 }
 
 document.getElementById('forgotPassword').addEventListener('click', () => {
-  document.getElementById('signin-status').textContent = 'Password reset is not connected yet.';
-});
-
-// When Font Awesome is online, show the real brand glyphs. Otherwise,
-// keep the embedded SVG logos visible: never leave empty icon buttons.
-window.addEventListener('load', async () => {
-  if (!document.fonts?.load) return;
-  try {
-    const faces = await document.fonts.load('400 18px "Font Awesome 6 Brands"');
-    if (faces.some(face => face.status === 'loaded')) {
-      document.documentElement.classList.add('fa-ready');
-    }
-  } catch (_) { /* The SVG logos remain available when offline. */ }
+  document.getElementById('signin-status').textContent = 'Password reset is not available in this UI demo.';
 });

@@ -1,82 +1,75 @@
 # VioletGate
 
-**A responsive, animated authentication UI — designed and developed by Ayman Bounaouj.**
+**An interactive, animated sign-in / sign-up UI demo — designed and developed by Ayman Bounaouj.**
 
-VioletGate is a polished frontend **demo** featuring animated Sign In / Sign Up panels, responsive layout, and light/dark appearance inspired by a purple, black, and white visual identity.
+[**Live demo ↗**](https://aymanbouanouj.github.io/violetgate/) · [Source code](https://github.com/aymanbouanouj/violetgate)
 
 > [!IMPORTANT]
-> This is **not a working authentication service**. There is no backend, OAuth flow, account database or password-reset feature. Form submissions are prevented and credentials are not transmitted by this demo. Do not enter real passwords.
+> VioletGate is a **frontend-only demo**, not a real authentication service. No accounts are created, passwords are not verified or transmitted, and OAuth/password-reset actions are illustrative. **Do not enter real credentials.**
 
 ## Preview
 
-| Light theme | Dark theme |
+| Light mode | Dark mode |
 | --- | --- |
-| ![Desktop light theme](assets/previews/desktop-light.png) | ![Desktop dark theme](assets/previews/desktop-dark.png) |
+| ![Light theme](assets/previews/desktop-light.png) | ![Dark theme](assets/previews/desktop-dark.png) |
 
-### Live demo
+<details>
+<summary>Mobile preview</summary>
 
-After enabling GitHub Pages: **https://aymanbouanouj.github.io/violetgate/**
+![Mobile sign-up screen](assets/previews/mobile-signup.png)
 
-*(Expected URL only — becomes active after you publish the repository and GitHub Pages finishes deploying.)*
+</details>
 
 ## Features
 
-- Animated sign-in and sign-up panels on desktop; stacked layout on small screens.
-- Manual light/dark switch with saved preference, falling back to the operating-system theme.
-- Brand palette: purple `#7C3AED`, black `#0A0A0D`, charcoal `#17171C`, white `#FFFFFF`.
-- Font Awesome social icons with embedded SVG fallbacks for offline use.
-- Semantic HTML labels, keyboard focus styles, reduced-motion support, and browser field validation.
-- No framework, build step, backend, or npm dependencies required for the page.
+- Animated transitions between sign-in and sign-up on desktop, plus a responsive stacked layout for mobile.
+- Purple (`#7C3AED`), black, and white branding; light/dark modes with a saved preference.
+- Keyboard-accessible interactions with focus management and reduced-motion support.
+- Built-in SVG social icons, no external font/icon requests or framework runtime.
+- Frontend-only validation and clear notices that authentication is not implemented.
+- Social sharing metadata, browser favicon, and GitHub Pages hosting.
 
-## Tech stack
+## Tech
 
-**HTML5**, **CSS3**, **vanilla JavaScript**. Font Awesome and Google Fonts are loaded through third-party CDNs when internet access is available.
+HTML5, CSS3, and vanilla JavaScript. No package installation or build step is required to use the page.
 
-## Folder structure
+## Project structure
 
 ```text
 violetgate/
-├── index.html                     # GitHub Pages entry point
+├── index.html
 ├── assets/
-│   ├── css/style.css               # Responsive styling and themes
-│   ├── js/script.js                # Interactions and demo behaviors
-│   ├── icons/favicon.svg          # Browser tab icon
-│   └── previews/                   # README screenshots
-├── scripts/verify.mjs             # Dependency-free integrity check
-├── .github/workflows/quality.yml # GitHub Actions static checks
-├── .nojekyll                       # Publish static files as-is
-├── .editorconfig
-├── .gitattributes
+│   ├── css/style.css
+│   ├── js/script.js
+│   ├── icons/favicon.svg
+│   └── previews/            # Screenshots displayed in this README
+├── scripts/verify.mjs      # Static integrity, privacy, and security checks
+├── .github/workflows/quality.yml
 ├── .gitignore
+├── .gitattributes
+├── .editorconfig
+├── .nojekyll
 └── README.md
 ```
 
-## Run locally
+## Run and verify
 
-1. Download or clone this repository.
-2. Open `index.html` in your browser, or run with VS Code **Live Server**.
-3. Try the Sign In / Sign Up switch and the theme toggle.
-
-Optional: run static integrity checks with Node.js 22 or newer:
+Open `index.html` in a browser, or use VS Code Live Server.
 
 ```bash
 node --check assets/js/script.js
 node scripts/verify.mjs
 ```
 
-## Publish to GitHub Pages
+The GitHub Actions workflow automatically runs these checks after pushes and on pull requests. Live browser interaction has also been verified locally; the automated static checks are not a replacement for accessibility or security testing.
 
-1. Create a **public** GitHub repository named `violetgate` under `aymanbouanouj` without generating an initial README or other files.
-2. Upload/push the **contents** of this folder. Keep `index.html` in the repository root.
-3. In the repository, open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select **main** and **/(root)**, then **Save**.
-6. When deployment completes, click **Visit site** or open `https://aymanbouanouj.github.io/violetgate/`.
+## Privacy and security scope
 
-The page has no dependency on the domain root and uses relative asset paths, so it works under the `violetgate` project subpath.
+- This page stores **only the theme preference** in `localStorage` under `violetgate-theme`.
+- Neither passwords nor email addresses are stored or sent by the demonstration logic. The demo action buttons are not HTML submit buttons and sensitive inputs have no `name` attributes.
+- No Google Fonts, Font Awesome, remote APIs, analytics, or tracking scripts are required to render the demo.
+- A real authentication implementation would require a separately secured backend, HTTPS, server-side validation, rate limiting, and secure session management.
 
-## Credits
+## Attribution and reuse
 
-Designed & developed by **Ayman Bounaouj**.
-
-This public repository has no open-source license attached. Add an explicit license only if you want to grant reuse or redistribution rights.
+Designed & developed by **Ayman Bounaouj**. This repository does **not** currently provide an open-source license; public visibility does not automatically grant reuse rights. The embedded example platform logos remain trademarks of their respective owners.

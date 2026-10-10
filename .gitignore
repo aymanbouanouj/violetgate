@@ -1,20 +1,24 @@
-# Operating system and editors
-.DS_Store
-Thumbs.db
+# Editors and operating systems
 .vscode/
 .idea/
+.DS_Store
+Thumbs.db
 
-# Logs and temporary files
-*.log
-*.tmp
-*.bak
-
-# Secret or environment files (none needed for this demo)
+# Secrets, credentials, and environment overrides
 .env
 .env.*
 !.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+id_rsa
+id_ed25519
 
-# Tool outputs
+# Logs, temporary files, generated output
+*.log
+*.tmp
+*.bak
 node_modules/
 coverage/
 test-results/
