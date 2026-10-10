@@ -40,6 +40,11 @@ assert(readme.includes('[**Live demo ↗**]'), 'Live demo link not prominent');
 assert(!readme.includes('Expected URL only'), 'Old deployment placeholder remains');
 assert(html.includes('Designed &amp; developed by'), 'Developer credit missing');
 assert(existsSync(resolve(root, '.nojekyll')), 'GitHub Pages marker missing');
+for (const path of ['package.json', 'playwright.config.mjs', 'tests/violetgate.spec.mjs', 'scripts/capture-previews.mjs', 'docs/RELEASING.md']) {
+  assert(existsSync(resolve(root, path)), `Missing development file: ${path}`);
+}
+assert(read('package.json').includes('@axe-core/playwright'), 'Accessibility test dependency not declared');
+assert(read('.github/workflows/quality.yml').includes('browser-tests:'), 'Browser CI job missing');
 
 // Basic leak guard for known sensitive filenames and recognizable credential formats.
 const inspect = (directory) => {
